@@ -25,12 +25,14 @@ def home(request):
      Student.objects.create(
         name = "Joy Doe",
         age = 20,
-        email = "abc@gmail.com"
+        email = "abc@gmail.com",
+       
      )
      Student.objects.create(
         name = "ram joy",
         age = 22,
-        email = "pqr@gmail.com"
+        email = "pqr@gmail.com",
+        
      )
 
 
