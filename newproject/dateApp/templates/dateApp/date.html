@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Date </h2>
+    <ul>
+        <li>name:{{ name |upper }}</li>
+        <li>Date: {{today|date:" d/m/Y"}}</li>
+        <li>Date: {{today|date:"n/y/d"}}</li>
+        <li>Date: {{today|date:"M/Y/D"}}</li>
+        <li>Date: {{today|date:"D/F/Y"}}</li>
+        <li>Time: {{time|date:"h:i:s"}}</li>
+        <li>Time: {{time|date:"H:i:s"}}</li>
+        <li>Time: {{time|date:"H:i:s a"}}</li>
+        <li>Time: {{time|date:"H:i:s A"}}</li>
+        <li>Time: {{time|date:"H A"}}</li>
+        <li>Time: {{time|date:"h a"}}</li>
+
+
+    </ul>
+</body>
+</html>

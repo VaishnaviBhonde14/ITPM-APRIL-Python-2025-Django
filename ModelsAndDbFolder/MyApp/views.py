@@ -5,6 +5,7 @@ from .models import Student
 def home(request):
     # students = Student.objects.all()
 
+
     # students = Student.objects.create(
     #     name = "Joy Doe",
     #     age = 20,
@@ -16,7 +17,6 @@ def home(request):
     #     email = "pqr@gmail.com"
     # )
 
-
     # students = Student.objects.all()
     # return render(request, 'MyApp/home.html', {'students' : [students]})
 
@@ -26,13 +26,11 @@ def home(request):
         name = "Joy Doe",
         age = 20,
         email = "abc@gmail.com",
-       
      )
      Student.objects.create(
         name = "ram joy",
         age = 22,
-        email = "pqr@gmail.com",
-        
+        email = "pqr@gmail.com",  
      )
 
 

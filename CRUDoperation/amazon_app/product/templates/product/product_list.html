@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product list</title>
+    <link rel="stylesheet" href="{% static 'product/css/productstyle.css' %}">
+</head>
+
+<body>
+    <h2 id="head">All Products</h2>
+    <a href="{% url 'add_product' %}" class="a_url">Add Product</a>
+
+    <div id="table_div">
+        <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Stock</th>
+            </tr>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <a href="{% url 'edit_product' product.id %}" class="edit_button">Edit</a>
+                    <a href="{% url 'delete_product' product.id %}" class="delete_button">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No products available.</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+</body>
+
+</html>

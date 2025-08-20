@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add product</title>
+  <link rel="stylesheet" href="{% static 'product/css/addstyle.css' %}">
+
+</head>
+
+<body>
+  <h2 id="head">Add Product</h2>
+  <div id="form_div">
+    <form method="post">
+      {% csrf_token %}
+      <label for="name_lable" class="form_label">Name:</label>
+      <input type="text" name="name"  class="form_input" required><br>
+
+      <label for="name_lable" class="form_label">Price:</label>
+      <input type="number" name="price" step="0.01"class="form_input" required><br>
+
+      <label for="name_lable" class="form_label">Discription:</label>
+      <textarea name="description" class="form_input" required></textarea><br>
+
+      <label for="name_lable" class="form_label">Stock:</label>
+      <input type="number" name="stock" class="form_input" required><br>
+
+      <input type="submit" value="Add Product" class="button_add">
+    </form>
+
+  </div>
+
+  <a href="{% url 'product_list' %}" class="a_url">Back to Product List</a>
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+
+</body>
+
+</html>

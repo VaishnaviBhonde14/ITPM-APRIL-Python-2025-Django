@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit product</title>
+  <link rel="stylesheet" href="{% static 'product/css/editstyle.css' %}">
+</head>
+
+<body>
+
+  <h2 id="head">Edit Product</h2>
+
+  <div id="edit_div">
+
+    <form method="post">
+      {% csrf_token %}
+
+    <label for="name_lable" class="label">Name:</label>
+      <input type="text" name="name" value="{{ product.name }}"><br>
+
+      <label for="name_lable" class="label">Price:</label>
+      <input type="number" name="price" step="0.01" value="{{ product.price }}"><br>
+
+      <label for="name_lable" class="label">Discription:</label>
+      <textarea name="description">{{ product.description }}</textarea><br>
+
+      <label for="name_lable" class="label">Stock:</label>
+      <input type="number" name="stock" value="{{ product.stock }}"><br>
+
+      <input type="submit" value="Update Product" class="button_edit">
+
+    </form>
+  </div>
+
+  <a href="{% url 'product_list' %}" class="a_url">Back to Product List</a>
+
+  {% if messages %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+</body>
+
+</html>

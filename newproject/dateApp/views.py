@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from datetime import date
+from datetime import date,datetime
 
 
 # Create your views here.
@@ -11,8 +11,8 @@ def fliter_demo(request):
         "today": date.today(),
         "description": ['red','green','blue'],
         "is_active": "yes",
-
+        "time": datetime.now(),
 
     }
 
-    return render(request,  "core/itpreneur.html",context)
+    return render(request,  "dateApp/date.html",context)
