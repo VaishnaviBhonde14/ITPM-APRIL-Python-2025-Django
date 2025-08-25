@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dashboard</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons (optional but nice) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --brand-start:#6f42c1;
+      --brand-end:#0d6efd;
+    }
+    body{ background: #f5f7fb; }
+    .app-header{
+      background: linear-gradient(135deg, var(--brand-start), var(--brand-end));
+      color:#fff;
+      border-radius: 1.25rem;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .app-header::after{
+      content:"";
+      position:absolute; right:-60px; top:-60px;
+      width:180px; height:180px; border-radius:50%;
+      background: rgba(255,255,255,.12);
+      filter: blur(2px);
+    }
+    .avatar{
+      width:56px; height:56px; border-radius:50%;
+      display:inline-grid; place-items:center;
+      background: rgba(255,255,255,.2);
+      backdrop-filter: blur(4px);
+      font-weight:700;
+    }
+    .role-badge{
+      background: rgba(255,255,255,.18);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.25);
+      padding:.35rem .6rem; border-radius: 999px;
+      font-size:.85rem;
+    }
+    .card-neo{
+      border:0; border-radius:1rem;
+      box-shadow: 0 6px 24px rgba(20, 20, 43, 0.06);
+    }
+    .quick-btn{
+      border-radius: .85rem;
+      transition: transform .08s ease, box-shadow .2s ease;
+    }
+    .quick-btn:hover{ transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.06); }
+    .stat{
+      border-radius: .9rem;
+      background: #fff;
+      padding:1rem;
+      border:1px solid rgba(0,0,0,.04);
+    }
+    .footer-muted{ color:#6c757d; font-size:.9rem; }
+  </style>
+</head>
+
+<body>
+  <div class="container py-4 py-md-5">
+
+    <!-- Header -->
+    <div class="app-header mb-4 mb-md-5">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <div class="avatar text-white">
+            {{ request.user.email|default:"U" |slice:":1" |upper }}
+          </div>
+          <div>
+            <h2 class="mb-1 fw-semibold">Welcome back,</h2>
+            <h4 class="mb-0">{{ request.user.email }}</h4>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <span class="role-badge">
+            <i class="bi bi-shield-check me-1"></i>
+            {{ role|title }}
+          </span>
+          <a href="{% url 'logout' %}" class="btn btn-outline-light ms-2">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+          </a>
+        </div>
+      </div>
+
+      <!-- Role message -->
+      <div class="mt-3">
+        {% if role == 'admin' %}
+          <div class="d-inline-flex align-items-center gap-2 small">
+            <i class="bi bi-stars"></i>
+            <span>You have full administrative privileges.</span>
+          </div>
+        {% elif role == 'trainer' %}
+          <div class="d-inline-flex align-items-center gap-2 small">
+            <i class="bi bi-easel2"></i>
+            <span>You can manage training content.</span>
+          </div>
+        {% else %}
+          <div class="d-inline-flex align-items-center gap-2 small">
+            <i class="bi bi-book"></i>
+            <span>You can view your courses and progress.</span>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-3 g-md-4 mb-4">
+      {% if role == 'admin' %}
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-people fs-4 d-block mb-2"></i>
+            Manage Users
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-kanban fs-4 d-block mb-2"></i>
+            View Reports
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-gear fs-4 d-block mb-2"></i>
+            Settings
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-cloud-arrow-up fs-4 d-block mb-2"></i>
+            Backups
+          </a>
+        </div>
+      {% elif role == 'trainer' %}
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-journal-plus fs-4 d-block mb-2"></i>
+            New Course
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-collection fs-4 d-block mb-2"></i>
+            My Batches
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-person-video3 fs-4 d-block mb-2"></i>
+            Sessions
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-bar-chart-line fs-4 d-block mb-2"></i>
+            Analytics
+          </a>
+        </div>
+      {% else %}
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-book fs-4 d-block mb-2"></i>
+            My Courses
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-graph-up fs-4 d-block mb-2"></i>
+            Progress
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-trophy fs-4 d-block mb-2"></i>
+            Certificates
+          </a>
+        </div>
+        <div class="col-6 col-md-3">
+          <a href="#" class="btn btn-light w-100 py-3 quick-btn border">
+            <i class="bi bi-chat-dots fs-4 d-block mb-2"></i>
+            Support
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Stats / Overview -->
+    <div class="row g-3 g-md-4">
+      <div class="col-md-4">
+        <div class="stat">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted">Active Courses</span>
+            <i class="bi bi-mortarboard fs-4"></i>
+          </div>
+          <div class="h3 mt-2 mb-0">12</div>
+          <div class="text-success small mt-1"><i class="bi bi-arrow-up-right"></i> +2 this week</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted">Enrollments</span>
+            <i class="bi bi-people fs-4"></i>
+          </div>
+          <div class="h3 mt-2 mb-0">348</div>
+          <div class="text-success small mt-1"><i class="bi bi-arrow-up-right"></i> +18 today</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted">Completion Rate</span>
+            <i class="bi bi-flag fs-4"></i>
+          </div>
+          <div class="h3 mt-2 mb-0">86%</div>
+          <div class="text-muted small mt-1">Steady</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role-specific panel -->
+    <div class="mt-4 mt-md-5">
+      {% if role == 'admin' %}
+        <div class="card card-neo">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Admin Console</h5>
+              <a href="#" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Add User</a>
+            </div>
+            <p class="text-muted mb-4">Quick access to the most used administrative tools.</p>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="p-3 rounded border h-100">
+                  <div class="fw-semibold mb-1"><i class="bi bi-lock me-2"></i>Roles & Permissions</div>
+                  <div class="small text-muted">Control access levels across the platform.</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-3 rounded border h-100">
+                  <div class="fw-semibold mb-1"><i class="bi bi-server me-2"></i>System Health</div>
+                  <div class="small text-muted">All services operational.</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="p-3 rounded border h-100">
+                  <div class="fw-semibold mb-1"><i class="bi bi-receipt me-2"></i>Billing & Plans</div>
+                  <div class="small text-muted">Manage subscriptions and invoices.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% elif role == 'trainer' %}
+        <div class="card card-neo">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Trainer Workspace</h5>
+              <a href="#" class="btn btn-primary"><i class="bi bi-upload me-1"></i>Upload Content</a>
+            </div>
+            <p class="text-muted mb-4">Manage sessions, track learners, and publish materials.</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-calendar-event me-3"></i>
+                Upcoming session on <strong class="ms-1">Friday, 3:00 PM</strong>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-chat-left-text me-3"></i>
+                5 new Q&A posts from learners
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="bi bi-clipboard-check me-3"></i>
+                2 assignments pending review
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      {% else %}
+        <div class="card card-neo">
+          <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Your Learning</h5>
+              <a href="#" class="btn btn-primary"><i class="bi bi-play-circle me-1"></i>Resume</a>
+            </div>
+            <p class="text-muted mb-4">Pick up where you left off and track your achievements.</p>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 rounded border h-100">
+                  <div class="fw-semibold mb-1"><i class="bi bi-journal-text me-2"></i>In-Progress Courses</div>
+                  <div class="small text-muted">3 courses • Last active 2h ago</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 rounded border h-100">
+                  <div class="fw-semibold mb-1"><i class="bi bi-trophy me-2"></i>Achievements</div>
+                  <div class="small text-muted">4 certificates earned</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-4 footer-muted">
+      <span>&copy; {{ now|date:"Y" }} Your LMS</span>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional for interactivity) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -88,11 +88,13 @@ DATABASES = {
         'ENGINE':'django.db.backends.mysql',
         'NAME':'mylmsdb',
         'USER':'root',
-        'PASSWORD':'992233',
+        'PASSWORD':'Root@1234',
         'HOST':'localhost',
         'PORT':'3306'
     }
 }
+
+AUTH_USER_MODEL='users.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
